@@ -49,7 +49,7 @@ def delete(tweetjs_path, since_date, until_date, filters, s, min_l, min_r, dry_r
             deleteTweet(row["tweet"]["id_str"])
             count += 1
             rate_limit_count = count / 50
-            if(rate_limit_count.is_integer() and rate_limit_count != 6):
+            if(rate_limit_count.is_integer() and rate_limit_count >= 6):
                 print("15 minute sleep because of rate limit. Tweets already deleted: {}".format(count))
                 time.sleep(900)
             elif():
