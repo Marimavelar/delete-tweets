@@ -1,6 +1,7 @@
 import io
 import sys
 import json
+import time
 
 from datetime import datetime
 from dateutil import parser
@@ -41,12 +42,20 @@ class TweetReader(object):
 
 def delete(tweetjs_path, since_date, until_date, filters, s, min_l, min_r, dry_run=False):
     with io.open(tweetjs_path, mode="r", encoding="utf-8") as tweetjs_file:
-        count = 0
+        count = 1
 
         tweets = json.loads(tweetjs_file.read()[25:])
         for row in TweetReader(tweets, since_date, until_date, filters, s, min_l, min_r).read():
             deleteTweet(row["tweet"]["id_str"])
             count += 1
+            rate_limit_count = count / 50
+            if(rate_limit_count.is_integer() and rate_limit_count != 6):
+                print("15 minute sleep because of rate limit. Tweets already deleted: {}".format(count))
+                time.sleep(900)
+            elif():
+                print("Over 300 requests done in 3 hours. Last tweet_id deleted was {}".format(row["tweet"]["id_str"]))
+                sys.exit()
+
 
         print("Number of deleted tweets: %s\n" % count)
 

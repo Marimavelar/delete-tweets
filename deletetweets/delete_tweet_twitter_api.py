@@ -26,8 +26,8 @@ def deleteTweet(id):
             "Delete request returned an error: {} {}".format(response.status_code, response.text)
         )
 
-    print("Response code: {}".format(response.status_code))
+    # print("Response code: {}".format(response.status_code))
 
     # Saving the response as JSON
     json_response = response.json()
-    print(json_response)
+    print("Tweet ID: {} \nAPI Response: {}".format(id, json_response))
